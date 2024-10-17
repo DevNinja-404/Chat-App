@@ -30,12 +30,11 @@ const Auth = () => {
   return (
     <BackgroundBeamsWithCollision className="">
       <div className="h-[100vh] w-[100vw] flex justify-center items-center text-white">
-        <div className="p-10  border-2 border-slate-900 text-opacity-10 shadow-2xl w-[80vw] md:w-[90vw] lg:w-[70vw] xl:w-[60vw] rounded-3xl xl:grid-cols-2 ">
+        <div className="p-10  border-2 border-slate-800 text-opacity-10 shadow-2xl w-[80vw] md:w-[90vw] lg:w-[70vw] xl:w-[60vw] rounded-3xl xl:grid-cols-2 ">
           <div className="flex flex-col gap-10 items-center justify-center">
-            <div className="flex items-center justify-center flex-col ">
+            <div className="flex items-center justify-center flex-col gap-y-2">
               <div className="flex items-center justify-center">
                 <h1 className="text-5xl  font-bold lg:text-6xl">Welcome</h1>
-                <img src={Victory} alt="Victory Emoji" className="h-[100px]" />
               </div>
               <p className="font-medium text-center">
                 Fill in the details to get started!
