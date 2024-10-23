@@ -40,10 +40,11 @@ const SignUp = () => {
         email: data.email,
         password: data.password,
       });
-      setTimeout(() => {
-        if (loginResponse?.data) toast.message("Navigating To ChatMe...");
+
+      if (loginResponse?.data && loginResponse.status === 200) {
+        toast.message("Navigating To ChatMe...");
         setUser(loginResponse?.data?.data);
-      }, 100);
+      }
       setTimeout(() => {
         navigate("/profile");
       }, 2000);

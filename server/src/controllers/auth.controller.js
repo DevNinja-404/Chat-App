@@ -1,5 +1,6 @@
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
+import { renameSync, unlinkSync } from "fs";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -89,4 +90,68 @@ const getCurrentUser = async (req, res, next) => {
   }
 };
 
-export const userController = { register, login, getCurrentUser };
+const updateProfileDetails = async (req, res, next) => {
+  try {
+    const { firstName, lastName, color } = req.body;
+    console.log(color, typeof color);
+
+    if (!firstName || !lastName || !typeof color === "number")
+      throw new Error("FirstName,LastName and Color all are required");
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $set: { firstName, lastName, color, isProfileComplete: true } },
+      { new: true }
+    );
+    return res
+      .status(200)
+      .json({ message: "Profile Updated Successfully", data: user });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updateProfilePic = async (req, res, next) => {
+  try {
+    const file = req.file;
+    if (!file) throw new Error("ProfilePic is Required");
+    const fileName =
+      "temp/" + file.fieldname + "-" + file.filename + "-" + file.originalname;
+
+    renameSync(file.path, `public/${fileName}`);
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $set: { image: fileName },
+      },
+      { new: true }
+    );
+    return res
+      .status(200)
+      .json({ message: "ProfilePic Updated Successfully", data: user?.image });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const removeProfilePic = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user?._id);
+    if (!user) throw new Error("User not found");
+    if (user?.image) unlinkSync(`public/${user.image}`);
+    user.image = null;
+    await user.save({ validateBeforeSave: false });
+    return res.status(200).json({ message: "ProfilePic Removed Successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const userController = {
+  register,
+  login,
+  getCurrentUser,
+  updateProfileDetails,
+  updateProfilePic,
+  removeProfilePic,
+};

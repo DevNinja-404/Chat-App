@@ -25,8 +25,10 @@ const Login = () => {
   const handleLogin = async (data) => {
     try {
       const response = await userServices.login(data);
-      if (response?.data) toast.success(response?.data?.message);
-      setUser(response?.data?.data);
+      if (response?.data && response.status === 200) {
+        toast.success(response?.data?.message);
+        setUser(response?.data?.data);
+      }
       setTimeout(() => {
         navigate("/profile");
       }, 1000);

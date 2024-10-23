@@ -47,13 +47,18 @@ function App() {
         }
       } catch (err) {
         console.log(err);
-        setUser({});
+        setUser(undefined);
+        return <Navigate to="/auth" />;
       } finally {
         setLoading(false);
       }
     };
     getCurrentUser();
   }, [setUser]);
+
+  if (!user) {
+    <Navigate to="/auth" />;
+  }
 
   return loading ? (
     <div className="w-screen h-screen flex items-center justify-center text-3xl">
