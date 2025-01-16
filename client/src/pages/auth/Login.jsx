@@ -30,7 +30,7 @@ const Login = () => {
         setUser(response?.data?.data);
       }
       setTimeout(() => {
-        navigate("/profile");
+        navigate("/chat");
       }, 1000);
     } catch (error) {
       handleError(error.response?.data?.message);

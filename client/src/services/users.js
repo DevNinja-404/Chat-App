@@ -9,6 +9,10 @@ const login = async (payload) => {
   return await instance.post(URLS.LOGIN, payload);
 };
 
+const logout = async () => {
+  return await instance.post(URLS.LOGOUT);
+};
+
 const getCurrentUser = async () => {
   return await instance.get(URLS.GET_PROFILE);
 };
@@ -28,6 +32,7 @@ const removeProfilePic = async () => {
 export const userServices = {
   register,
   login,
+  logout,
   getCurrentUser,
   updateProfile,
   updateProfilePic,

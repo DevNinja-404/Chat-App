@@ -80,6 +80,22 @@ const login = async (req, res, next) => {
   }
 };
 
+const logout = async (req, res, next) => {
+  try {
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+    return res
+      .status(200)
+      .clearCookie("accessToken", options)
+      .clearCookie("refreshToken", options)
+      .json({ message: "Logged out successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getCurrentUser = async (req, res, next) => {
   try {
     return await res
@@ -150,6 +166,7 @@ const removeProfilePic = async (req, res, next) => {
 export const userController = {
   register,
   login,
+  logout,
   getCurrentUser,
   updateProfileDetails,
   updateProfilePic,

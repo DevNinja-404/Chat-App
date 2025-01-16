@@ -18,8 +18,10 @@ app.use(cookieParser());
 
 // Routes:
 import userRouter from "./routes/auth.routes.js";
+import contactRouter from "./routes/contact.routes.js";
 
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/contacts", contactRouter);
 
 // Handling Error Globally:
 app.use((err, req, res, next) => {

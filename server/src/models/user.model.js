@@ -1,5 +1,5 @@
-import mongoose, { Mongoose } from "mongoose";
-import bcrypt, { compareSync } from "bcrypt";
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
@@ -70,7 +70,7 @@ userSchema.methods.generateRefreshToken = function () {
       color: this.color,
     },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: process.env.REFRESH_TOKEN_EXPIRY  }
+    { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
   );
 };
 
